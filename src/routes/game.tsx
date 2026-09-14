@@ -1,0 +1,22 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { ShieldCheck, Trophy } from "lucide-react";
+import { useState } from "react";
+import battlefieldAsset from "@/assets/generals-battlefield.jpg.asset.json";
+import { BattlefieldGrid } from "@/components/game/battlefield-grid";
+import { CommanderPanel } from "@/components/game/commander-panel";
+import { GameChat } from "@/components/game/chat";
+import { GameTopBar } from "@/components/game/game-top-bar";
+import { PlayerLeaderboard } from "@/components/game/player-leaderboard";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+
+export const Route = createFileRoute("/game")({ head: () => ({ meta: [{ title: "Battlefield — GENERALS" },{ name: "description", content: "Command the GENERALS battlefield from a cinematic tactical interface." },{ property: "og:title", content: "Battlefield — GENERALS" },{ property: "og:description", content: "Command the GENERALS battlefield from a cinematic tactical interface." },{ property: "og:type", content: "website" },{ name: "twitter:card", content: "summary_large_image" }] }), component: GamePage });
+
+function GamePage() {
+  const [selectedTile,setSelectedTile] = useState<number|null>(null); const [selectedPlayer,setSelectedPlayer] = useState<number|null>(1); const [energy,setEnergy] = useState(0); const [notice,setNotice] = useState(""); const [surrender,setSurrender] = useState(false); const [outcome,setOutcome] = useState<"victory"|"defeat"|null>(null);
+  const notify = (message:string) => { setNotice(message); window.setTimeout(() => setNotice(""),2400); };
+  return <main className="relative flex h-dvh min-h-[620px] flex-col overflow-hidden bg-background text-foreground"><img src={battlefieldAsset.url} alt="Blue and red armies facing across a mountain battlefield" className="absolute inset-0 size-full object-cover"/><div className="battlefield-vignette absolute inset-0"/><GameTopBar onSurrender={() => setSurrender(true)}/><div className="relative z-10 grid min-h-0 flex-1 grid-cols-[clamp(190px,16vw,250px)_minmax(0,1fr)_clamp(340px,27vw,430px)] gap-4 p-4"><aside className="self-start"><PlayerLeaderboard selected={selectedPlayer} onSelect={setSelectedPlayer}/></aside><section className="flex min-w-0 items-center justify-center" aria-label="Game map"><BattlefieldGrid selected={selectedTile} onSelect={setSelectedTile}/></section><aside className="min-h-0"><CommanderPanel energy={energy} onEnergy={setEnergy} onNotify={notify}/></aside></div><GameChat/>{notice && <div className="absolute bottom-5 left-1/2 z-40 -translate-x-1/2 rounded-md border border-gold/50 bg-panel-strong px-4 py-2 text-xs shadow-2xl">{notice}</div>}<Button variant="ghost" size="sm" className="absolute bottom-1 right-[calc(clamp(340px,27vw,430px)+1.25rem)] z-20 opacity-20 hover:opacity-100" onClick={() => setOutcome("victory")} aria-label="Show match result demo"><ShieldCheck/></Button>
+    <Dialog open={surrender} onOpenChange={setSurrender}><DialogContent className="border-gold/50 bg-panel-strong"><DialogHeader><DialogTitle className="font-brand text-gold">Surrender this battle?</DialogTitle><DialogDescription>Your army will withdraw and this prototype will show a defeat result.</DialogDescription></DialogHeader><DialogFooter><Button variant="gameOutline" onClick={() => setSurrender(false)}>Continue Battle</Button><Button variant="danger" onClick={() => { setSurrender(false); setOutcome("defeat"); }}>Surrender</Button></DialogFooter></DialogContent></Dialog>
+    <Dialog open={outcome !== null} onOpenChange={(open) => { if(!open) setOutcome(null); }}><DialogContent className="border-gold/50 bg-panel-strong text-center"><div className="mx-auto flex size-16 items-center justify-center rounded-full border border-gold/50 bg-gold/10"><Trophy className="size-8 text-gold"/></div><DialogHeader className="text-center sm:text-center"><DialogTitle className="font-brand text-3xl text-gold">{outcome === "victory" ? "VICTORY" : "DEFEAT"}</DialogTitle><DialogDescription>{outcome === "victory" ? "The battlefield belongs to your army." : "Your command has withdrawn from the field."}</DialogDescription></DialogHeader><Button variant="game" onClick={() => setOutcome(null)}>Return to Battlefield</Button></DialogContent></Dialog>
+  </main>;
+}

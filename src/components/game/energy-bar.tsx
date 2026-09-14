@@ -1,0 +1,4 @@
+import { Zap } from "lucide-react";
+export function EnergyBar({ energy }: { energy: number }) {
+  return <div className="rounded-md border border-panel-border bg-background/55 p-3"><div className="flex items-center justify-between"><span className="text-[11px] font-bold uppercase text-muted-foreground">Commander Energy</span><b className="text-sm">{energy} <small className="font-normal text-muted-foreground">/ 100</small></b></div><div className="mt-2 flex items-center gap-2"><Zap className="size-5 fill-gold text-gold"/><div className="h-3 flex-1 overflow-hidden rounded-full border border-panel-border bg-background"><div className="h-full bg-primary transition-[width] duration-500" style={{ width: `${energy}%` }}/></div></div></div>;
+}
