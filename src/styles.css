@@ -19,6 +19,9 @@
  */
 
 @theme inline {
+  --font-sans: "Roboto", sans-serif;
+  --font-brand: "Cinzel", serif;
+  --font-serif: "Roboto Slab", serif;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -59,29 +62,85 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-panel: var(--panel);
+  --color-panel-strong: var(--panel-strong);
+  --color-panel-border: var(--panel-border);
+  --color-gold: var(--gold);
+  --color-gold-bright: var(--gold-bright);
+  --color-primary-hover: var(--primary-hover);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+  --color-danger-hover: var(--danger-hover);
+  --color-danger-foreground: var(--danger-foreground);
+  --color-tile: var(--tile);
+  --color-tile-line: var(--tile-line);
+  --color-tile-ink: var(--tile-ink);
+  --color-tile-city: var(--tile-city);
+  --color-tile-mountain: var(--tile-mountain);
+  --color-player-1: var(--player-1);
+  --color-player-2: var(--player-2);
+  --color-player-3: var(--player-3);
+  --color-player-4: var(--player-4);
+  --color-player-5: var(--player-5);
+  --color-player-6: var(--player-6);
+  --color-player-7: var(--player-7);
+  --color-player-8: var(--player-8);
+  --color-player-9: var(--player-9);
+  --color-player-10: var(--player-10);
+  --color-player-11: var(--player-11);
+  --color-player-12: var(--player-12);
+  --shadow-game: 0 8px 28px color-mix(in oklab, var(--primary) 32%, transparent);
+  --shadow-danger: 0 8px 24px color-mix(in oklab, var(--danger) 32%, transparent);
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
+  --radius: 0.42rem;
+  --background: oklch(0.105 0.025 239);
+  --foreground: oklch(0.96 0.012 245);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.129 0.042 264.695);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
+  --primary: oklch(0.61 0.22 256);
+  --primary-hover: oklch(0.67 0.2 250);
+  --primary-foreground: oklch(0.99 0 0);
   --secondary: oklch(0.968 0.007 247.896);
   --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
+  --muted: oklch(0.2 0.03 239);
+  --muted-foreground: oklch(0.71 0.035 244);
   --accent: oklch(0.968 0.007 247.896);
   --accent-foreground: oklch(0.208 0.042 265.755);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
+  --border: oklch(0.31 0.055 235);
+  --input: oklch(0.3 0.055 235);
+  --ring: oklch(0.66 0.2 250);
+  --panel: oklch(0.14 0.036 239 / 86%);
+  --panel-strong: oklch(0.125 0.032 239 / 96%);
+  --panel-border: oklch(0.35 0.07 233 / 72%);
+  --gold: oklch(0.78 0.13 82);
+  --gold-bright: oklch(0.91 0.13 91);
+  --success: oklch(0.72 0.19 151);
+  --danger: oklch(0.64 0.24 25);
+  --danger-hover: oklch(0.7 0.23 25);
+  --danger-foreground: oklch(0.99 0 0);
+  --tile: oklch(0.91 0.008 245);
+  --tile-line: oklch(0.31 0.02 245);
+  --tile-ink: oklch(0.28 0.018 245);
+  --tile-city: oklch(0.62 0.01 245);
+  --tile-mountain: oklch(0.86 0.008 245);
+  --player-1: oklch(0.66 0.2 245);
+  --player-2: oklch(0.64 0.24 25);
+  --player-3: oklch(0.65 0.18 160);
+  --player-4: oklch(0.84 0.16 88);
+  --player-5: oklch(0.63 0.24 304);
+  --player-6: oklch(0.72 0.18 52);
+  --player-7: oklch(0.76 0.15 210);
+  --player-8: oklch(0.72 0.17 345);
+  --player-9: oklch(0.52 0.11 73);
+  --player-10: oklch(0.91 0.015 245);
+  --player-11: oklch(0.55 0.04 245);
+  --player-12: oklch(0.2 0.02 245);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -140,5 +199,21 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
+    overflow: hidden;
   }
+}
+
+@utility brand-gold {
+  font-family: var(--font-brand);
+  color: var(--color-gold-bright);
+  text-shadow: 0 2px 0 color-mix(in oklab, var(--gold) 45%, transparent), 0 0 22px color-mix(in oklab, var(--gold) 18%, transparent);
+}
+
+@utility battlefield-vignette {
+  background: linear-gradient(90deg, color-mix(in oklab, var(--background) 48%, transparent), transparent 37%, transparent 63%, color-mix(in oklab, var(--background) 50%, transparent)), linear-gradient(180deg, color-mix(in oklab, var(--background) 20%, transparent), color-mix(in oklab, var(--background) 72%, transparent));
+}
+
+@utility gold-panel {
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--gold) 22%, transparent), 0 18px 55px color-mix(in oklab, var(--background) 72%, transparent);
 }
