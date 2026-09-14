@@ -1,0 +1,7 @@
+import { gamePlayers } from "@/lib/game-mock";
+import { cn } from "@/lib/utils";
+import { GoldPanel } from "./game-shell";
+
+export function PlayerLeaderboard({ selected, onSelect }: { selected: number | null; onSelect: (rank: number) => void }) {
+  return <GoldPanel className="w-full p-3 xl:p-4"><h2 className="font-brand text-base font-bold tracking-[0.08em] text-gold">PLAYERS</h2><div className="mt-2 grid grid-cols-[18px_1fr_38px_32px] gap-2 border-b border-panel-border pb-2 text-[9px] uppercase text-muted-foreground"><span>#</span><span>Player</span><span className="text-right">Army</span><span className="text-right">Land</span></div><ul>{gamePlayers.map((player) => <li key={player.name}><button type="button" onClick={() => onSelect(player.rank)} className={cn("grid w-full grid-cols-[18px_1fr_38px_32px] items-center gap-2 border-b border-panel-border/45 px-1 py-[7px] text-left text-[11px] transition-colors hover:bg-primary/10",player.you && "rounded-sm bg-primary/20",selected === player.rank && "ring-1 ring-inset ring-gold")}><span>{player.rank}</span><span className="flex min-w-0 items-center gap-2"><i className={cn("size-3 shrink-0 rounded-full",player.colour)}/><span className="truncate">{player.name}{player.you ? <small className="ml-1 text-[9px] text-primary">(You)</small> : null}</span></span><b className="text-right tabular-nums">{player.army}</b><span className="text-right tabular-nums">{player.land}</span></button></li>)}</ul></GoldPanel>;
+}

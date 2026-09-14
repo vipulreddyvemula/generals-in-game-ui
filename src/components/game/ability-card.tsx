@@ -1,0 +1,10 @@
+import { Crosshair, Plane, Radar, Shield, Swords, Zap } from "lucide-react";
+import type { Ability } from "@/lib/game-mock";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
+const icons = { scout: Radar, blitz: Swords, reinforce: Shield, fortify: Crosshair, airstrike: Plane, supply: Zap };
+export function AbilityCard({ ability, energy, selected, onSelect, onUse }: { ability: Ability; energy: number; selected: boolean; onSelect: () => void; onUse: () => void }) {
+  const Icon = icons[ability.icon]; const usable = ability.state === "AVAILABLE" && energy >= ability.cost;
+  return <article onClick={onSelect} className={cn("cursor-pointer rounded-md border border-panel-border bg-background/50 p-3 transition-colors hover:border-primary/70",selected && "border-gold bg-gold/10",ability.state === "LOCKED" && "opacity-55")}><div className="flex items-start justify-between gap-2"><span className="flex items-center gap-2 text-xs font-bold"><Icon className="size-4 text-primary"/>{ability.name}</span><span className={cn("rounded-sm border px-1 py-0.5 text-[8px] font-bold",ability.state === "AVAILABLE" && "border-success/50 text-success",ability.state === "LOCKED" && "border-border text-muted-foreground",ability.state === "COOLDOWN" && "border-gold/50 text-gold")}>{ability.state}</span></div><p className="mt-2 min-h-8 text-[10px] leading-relaxed text-muted-foreground">{ability.description}</p><div className="mt-2 flex items-center justify-between"><span className="flex items-center gap-1 text-[10px] font-bold text-gold"><Zap className="size-3"/>{ability.cost}</span><Button variant={usable ? "game" : "gameOutline"} size="sm" disabled={!usable} onClick={(event) => { event.stopPropagation(); onUse(); }} className="h-7 px-3 text-[10px]">{ability.state === "COOLDOWN" ? ability.cooldown : ability.state === "LOCKED" ? "Locked" : usable ? "Use" : "Low energy"}</Button></div></article>;
+}
